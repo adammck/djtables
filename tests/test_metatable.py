@@ -62,15 +62,3 @@ def test_ignores_non_column_attrs():
     assert len(AnyTable._meta.columns) == 0
     assert AnyTable.gamma == False
     assert AnyTable.delta == 999
-
-
-def test_preserves_column_order():
-    class AnyTable(object):
-        __metaclass__ = MetaTable
-        options_class = MockOptions
-        epsilon = Column()
-        zeta    = Column()
-        eta     = Column()
-
-    assert AnyTable._meta.columns.keys() == [
-        'epsilon', 'zeta', 'eta']
