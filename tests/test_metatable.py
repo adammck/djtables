@@ -3,62 +3,50 @@
 
 
 from tables.table import MetaTable
-from tables.column import Column
 
 
-# unlike the real Options, this mock will accept ANY names
 class MockOptions(object):
-    def __init__(self, options):
-        if options is not None:
-            for name, value in options.__dict__.items():
+    def __init__(self, cls):
+        if cls is not None:
+            for name, value in cls.__dict__.items():
                 setattr(self, name, value)
 
 
+class MockColumn(object):
+    pass
+
+
+class TestTable(object):
+    __metaclass__ = MetaTable
+    options_class = MockOptions
+    column_class  = MockColumn
+
+    alpha = MockColumn()
+    beta  = MockColumn()
+    gamma = False
+    delta = 999
+
+    class Meta:
+        one = 1111
+        two = 2222
+
+
 def test_adds_table_options():
-    class TableNoMeta(object):
-        __metaclass__ = MetaTable
-        options_class = MockOptions
-
-    assert hasattr(TableNoMeta, '_meta')
-    assert isinstance(TableNoMeta._meta, MockOptions)
-
-    class TableWithMeta(object):
-        __metaclass__ = MetaTable
-        options_class = MockOptions
-
-        class Meta:
-            one = 1
-            two = 2
-
-    assert TableWithMeta._meta.one == 1
-    assert TableWithMeta._meta.two == 2
+    assert hasattr(TestTable, '_meta')
+    assert isinstance(TestTable._meta, MockOptions)
+    assert TestTable._meta.one == 1111
+    assert TestTable._meta.two == 2222
 
 
 def test_captures_column_attrs():
-    class AnyColumnSubclass(Column):
-        pass
-
-    class AnyTable(object):
-        __metaclass__ = MetaTable
-        options_class = MockOptions
-        alpha = AnyColumnSubclass()
-        beta  = Column()
-
-    def check(name):
-        assert name in AnyTable._meta.columns.keys()
-        assert not hasattr(AnyTable, name)
-
-    check('alpha')
-    check('beta')
+    assert 'alpha' in TestTable._meta.columns.keys()
+    assert 'beta'  in TestTable._meta.columns.keys()
+    assert not hasattr(TestTable, 'alpha')
+    assert not hasattr(TestTable, 'beta')
 
 
 def test_ignores_non_column_attrs():
-    class AnyTable(object):
-        __metaclass__ = MetaTable
-        options_class = MockOptions
-        gamma = False
-        delta = 999
-
-    assert len(AnyTable._meta.columns) == 0
-    assert AnyTable.gamma == False
-    assert AnyTable.delta == 999
+    assert 'gamma' not in TestTable._meta.columns.keys()
+    assert 'delta' not in TestTable._meta.columns.keys()
+    assert TestTable.gamma == False
+    assert TestTable.delta == 999
