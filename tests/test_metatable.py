@@ -13,7 +13,8 @@ class MockOptions(object):
 
 
 class MockColumn(object):
-    pass
+    def bind_to(self, *args):
+        self.bound_to = args
 
 
 class TestTable(object):
@@ -31,22 +32,43 @@ class TestTable(object):
         two = 2222
 
 
-def test_adds_table_options():
+class TestTableNoMeta(object):
+    __metaclass__ = MetaTable
+    options_class = MockOptions
+    column_class  = MockColumn
+
+
+def test_explicit_table_options():
     assert hasattr(TestTable, '_meta')
     assert isinstance(TestTable._meta, MockOptions)
     assert TestTable._meta.one == 1111
     assert TestTable._meta.two == 2222
 
 
+def test_default_table_options():
+    assert hasattr(TestTableNoMeta, '_meta')
+    assert isinstance(TestTableNoMeta._meta, MockOptions)
+
+
 def test_captures_column_attrs():
-    assert 'alpha' in TestTable._meta.columns.keys()
-    assert 'beta'  in TestTable._meta.columns.keys()
+    assert len(TestTable._meta.columns) == 2
     assert not hasattr(TestTable, 'alpha')
     assert not hasattr(TestTable, 'beta')
 
 
 def test_ignores_non_column_attrs():
-    assert 'gamma' not in TestTable._meta.columns.keys()
-    assert 'delta' not in TestTable._meta.columns.keys()
     assert TestTable.gamma == False
     assert TestTable.delta == 999
+
+
+def test_binds_columns_with_table_and_name():
+
+    # extract the bindings of each column, so we can check that each
+    # declared column exists _somewhere_ within, because we can't rely
+    # on MockColuns coming out in the same order they went in.
+    bindings = [
+        getattr(c, 'bound_to')
+        for c in TestTable._meta.columns]
+
+    assert (TestTable, 'alpha') in bindings
+    assert (TestTable, 'beta') in bindings
