@@ -52,6 +52,19 @@ def test_returns_object_list():
     assert d == DATA
 
 
+def test_returns_rows():
+    class MockRow(object):
+        def __init__(self, table, obj):
+            self.table = table
+            self.obj = obj
+
+    t = TestTable(DATA, row_class=MockRow)
+
+    for n in range(len(DATA)):
+        assert isinstance(t.rows[n], MockRow)
+        assert t.rows[n].obj == DATA[n]
+
+
 def test_returns_rows_on_active_page():
     t = TestTable(DATA, per_page=2)
-    assert t.rows == DATA[0:2]
+    assert len(t.rows) == 2

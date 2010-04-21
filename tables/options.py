@@ -3,6 +3,7 @@
 
 
 from django.core.paginator import Paginator
+from .row import Row
 
 
 class Options(object):
@@ -46,6 +47,7 @@ class Options(object):
 class TableOptions(Options):
     _defaults = {
         'paginator_class': Paginator,
+        'row_class': Row,
         'order_by': None,
         'per_page': 20,
         'columns': []

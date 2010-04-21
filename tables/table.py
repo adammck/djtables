@@ -66,4 +66,8 @@ class Table(object):
     @property
     def rows(self):
         """Return the list of object on the active page."""
-        return self.paginator.page(self.page).object_list
+
+        return map(
+            lambda o: self._meta.row_class(self, o),
+            self.paginator.page(self.page).object_list
+        )
