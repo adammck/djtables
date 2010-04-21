@@ -2,6 +2,9 @@
 # vim: et ts=4 sw=4
 
 
+from django.core.paginator import Paginator
+
+
 class Options(object):
     _defaults = { }
 
@@ -42,8 +45,9 @@ class Options(object):
 
 class TableOptions(Options):
     _defaults = {
-        'per_page': 20,
+        'paginator_class': Paginator,
         'order_by': None,
+        'per_page': 20,
         'columns': []
     }
 
