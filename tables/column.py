@@ -23,8 +23,8 @@ class Column(object):
     def bind_to(self, table, name):
         if self.bound_to is not None:
             raise TypeError(
-                "'Column' object is already bound to '%s' as '%s'"  %\
-                self.bound_to)
+                "Column is already bound to '%s' as '%s'" %\
+                    self.bound_to)
 
         self.bound_to = (table, name)
 
