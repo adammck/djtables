@@ -17,21 +17,24 @@ class Options(object):
         # from the options object. (but they must still be valid.)
         options.update(kwargs)
 
-        # iterate *the defaults* while moving the options into this
-        # object, to leave only the unknown (invalid) attrs.
-        for key, value in self._defaults.items():
-            setattr(self, key, options.pop(key, value))
-
-        # ignore __magic__ and _private methods from the object.
-        invalids = filter(lambda o: not o.startswith("_"), options)
-
-        # invalid options are fatal, like django. this seems kind of
+        # store each option (except for _private and __magic__). setattr
+        # will raise if ANY are invalid, like django. this seems kind of
         # heavy-handed (especially since i've wanted to add my own Meta
-        # options to models, before), but i'm following for consistency.
-        if invalids:
-            raise AttributeError(
-                "Invalid option(s): %s" %\
-                    ", ".join(invalids))
+        # options to models before), but i'm following for consistency.
+        for key in options.keys():
+            if not key.startswith("_"):
+                value = options.pop(key)
+                setattr(self, key, value)
+
+        # store any defaults which were not overridden.
+        for key, value in self._defaults.items():
+            if not hasattr(self, key):
+                setattr(self, key, value)
+
+    def __setattr__(self, name, value):
+        if name in self._defaults:  object.__setattr__(self, name, value)
+        else:  raise AttributeError("Invalid option: %s" % name)
+
 
     def fork(self, **kwargs):
         return self.__class__(self, **kwargs)
@@ -40,5 +43,7 @@ class Options(object):
 class TableOptions(Options):
     _defaults = {
         'per_page': 20,
-        'order_by': None }
+        'order_by': None,
+        'columns': []
+    }
 

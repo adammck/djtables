@@ -18,11 +18,6 @@ def test_provides_defaults():
     assert o.number == 111
 
 
-@raises(AttributeError)
-def test_raises_on_invalid_getattr():
-    TestOptions().invalid
-
-
 def test_accepts_kwargs():
     o = TestOptions(letter="B")
     assert o.letter == "B"
@@ -41,6 +36,16 @@ def test_accepts_object():
 @raises(AttributeError)
 def test_raises_on_invalid_kwargs():
     TestOptions(a=1, b=2, c=3)
+
+
+@raises(AttributeError)
+def test_raises_on_invalid_getattr():
+    TestOptions().invalid
+
+
+@raises(AttributeError)
+def test_raises_on_invalid_setattr():
+    TestOptions().invalid = None
 
 
 def test_is_forkable():
