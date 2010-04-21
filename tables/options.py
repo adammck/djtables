@@ -33,6 +33,9 @@ class Options(object):
                 "Invalid option(s): %s" %\
                     ", ".join(invalids))
 
+    def fork(self, **kwargs):
+        return self.__class__(self, **kwargs)
+
 
 class TableOptions(Options):
     _defaults = {

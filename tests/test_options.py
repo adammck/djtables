@@ -9,13 +9,13 @@ from tables.options import Options
 class TestOptions(Options):
     _defaults = {
         'letter': "A",
-        'number': 999 }
+        'number': 111 }
 
 
 def test_provides_defaults():
     o = TestOptions()
     assert o.letter == "A"
-    assert o.number == 999
+    assert o.number == 111
 
 
 @raises(AttributeError)
@@ -26,18 +26,30 @@ def test_raises_on_invalid_getattr():
 def test_accepts_kwargs():
     o = TestOptions(letter="B")
     assert o.letter == "B"
-    assert o.number == 999
+    assert o.number == 111
 
 
 def test_accepts_object():
     class Meta:
-        number = 111
+        number = 333
 
     o = TestOptions(Meta)
     assert o.letter == "A"
-    assert o.number == 111
+    assert o.number == 333
 
 
 @raises(AttributeError)
 def test_raises_on_invalid_kwargs():
     TestOptions(a=1, b=2, c=3)
+
+
+def test_is_forkable():
+    t1 = TestOptions()
+    t2 = t1.fork(letter="C")
+    t3 = t1.fork(number=444)
+
+    assert t2.letter == "C"
+    assert t3.number == 444
+
+    assert t1.letter == "A"
+    assert t1.number == 111
