@@ -39,9 +39,31 @@ class MetaTable(type):
 class Table(object):
     __metaclass__ = MetaTable
 
-    def __init__(self, request=None):
-        self.request = request
+    def __init__(self, object_list=None, request=None, page=1, **kwargs):
+        self._object_list = object_list
+        self._request = request
+
+        self._paginator = None
+        self.page = page
+
+        if len(kwargs):
+            self._meta = self._meta.fork(
+                **kwargs)
+
+    @property
+    def object_list(self):
+        """Return the full object_list."""
+        return self._object_list
+
+    @property
+    def paginator(self):
+        if self._paginator is None:
+            self._paginator = self._meta.paginator_class(
+                self._object_list, self._meta.per_page)
+
+        return self._paginator
 
     @property
     def rows(self):
-        return []
+        """Return the list of object on the active page."""
+        return self.paginator.page(self.page).object_list
