@@ -30,7 +30,7 @@ class Options(object):
         # options to models, before), but i'm following for consistency.
         if invalids:
             raise AttributeError(
-                "'Invalid option(s): %s" %\
+                "Invalid option(s): %s" %\
                     ", ".join(invalids))
 
 
