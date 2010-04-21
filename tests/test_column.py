@@ -12,7 +12,8 @@ def test_sortable_by_order_of_creation():
 
 
 def test_can_be_bound():
-    c = Column(); c.bind_to(1, 2)
+    c = Column()
+    c.bind_to(1, 2)
     assert c.bound_to == (1, 2)
 
 
@@ -21,3 +22,14 @@ def test_raises_if_rebound():
     c = Column()
     c.bind_to(1, 2)
     c.bind_to(3, 4)
+
+
+def test_can_be_explicitly_named():
+    c = Column(name="alpha")
+    assert c.name == "alpha"
+
+
+def test_can_be_named_by_binding():
+    c = Column()
+    c.bind_to(1, "beta")
+    assert c.name == "beta"

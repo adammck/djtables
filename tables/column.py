@@ -5,7 +5,8 @@
 class Column(object):
     creation_counter = 0
 
-    def __init__(self):
+    def __init__(self, name=None):
+        self._name = name
 
         # like django fields, keep track of the order which columns are
         # created, so they can be sorted later. (unfortunately, python
@@ -13,6 +14,7 @@ class Column(object):
         # keep track of this manually to avoid random column order.)
         self.creation_counter = Column.creation_counter
         Column.creation_counter += 1
+
 
         self.bound_to = None
 
@@ -31,3 +33,8 @@ class Column(object):
     @property
     def is_bound(self):
         return (self.bound_to is not None)
+
+    @property
+    def name(self):
+        """Return the column name, whether explicit or implicit."""
+        return self._name or self.bound_to[1]
