@@ -68,3 +68,16 @@ def test_returns_rows():
 def test_returns_rows_on_active_page():
     t = TestTable(DATA, per_page=2)
     assert len(t.rows) == 2
+
+
+def test_spawns_cells():
+    class MockCell(object):
+        def __init__(self, column, row):
+            self.column = column
+            self.row = row
+
+    t = TestTable(DATA, cell_class=MockCell)
+    c = t.cell(111, 222)
+
+    assert c.column == 111
+    assert c.row    == 222

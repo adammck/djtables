@@ -71,3 +71,7 @@ class Table(object):
             lambda o: self._meta.row_class(self, o),
             self.paginator.page(self.page).object_list
         )
+
+    def cell(self, column, row):
+        return self._meta.cell_class(
+            column, row)
