@@ -38,3 +38,11 @@ class Column(object):
     def name(self):
         """Return the column name, whether explicit or implicit."""
         return self._name or self.bound_to[1]
+
+    def render(self, value):
+        """
+        Return ``value`` ready for display. The default behavior is to
+        simply cast it to unicode, but this may be overridden by child
+        classes to do something more useful.
+        """
+        return unicode(value)

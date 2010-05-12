@@ -33,3 +33,7 @@ def test_can_be_named_by_binding():
     c = Column()
     c.bind_to(1, "beta")
     assert c.name == "beta"
+
+
+def test_renders_values_to_unicode():
+    assert Column().render(123) == "123"
