@@ -22,3 +22,6 @@ class Row(object):
     def __iter__(self):
         for column in self.table._meta.columns:
             yield self.table.cell(column, self)
+
+    def __len__(self):
+        return len(self.table._meta.columns)

@@ -61,3 +61,8 @@ def test_is_iterable():
 
     row = Row(TestTable(), data)
     assert iter(row)
+
+
+def test_has_length():
+    row = Row(TestTable(), {})
+    assert len(row) == 2
