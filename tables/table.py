@@ -64,6 +64,11 @@ class Table(object):
         return self._paginator
 
     @property
+    def columns(self):
+        """Return the list of columns."""
+        return self._meta.columns
+
+    @property
     def rows(self):
         """Return the list of object on the active page."""
 

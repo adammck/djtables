@@ -30,8 +30,14 @@ def test_overrides_options():
     assert TestTable._meta.__dict__ == m
 
 
-def test_exposes_columns():
+def test_class_exposes_columns_via_meta():
     c = TestTable._meta.columns
+    assert c[0].name == "name"
+    assert c[1].name == "weapon"
+
+
+def test_instance_exposes_columns():
+    c = TestTable().columns
     assert c[0].name == "name"
     assert c[1].name == "weapon"
 
