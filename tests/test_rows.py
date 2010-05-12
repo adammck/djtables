@@ -48,10 +48,9 @@ def test_calls_callables():
     assert row.weapon == "Bo Staff"
 
 
-@raises(AttributeError)
-def test_raises_on_invalid_column():
+def test_returns_none_on_invalid_column():
     row = Row(TestTable(), {})
-    row.whatever # boom
+    assert row.whatever == None
 
 
 def test_is_iterable():

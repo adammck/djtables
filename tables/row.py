@@ -9,15 +9,15 @@ class Row(object):
 
     def __getattr__(self, name):
         if hasattr(self.obj, name):
-            value = getattr(self.obj, name)
+            val = getattr(self.obj, name)
 
-        elif name in self.obj:
-            value = self.obj[name]
+        elif hasattr(self.obj, "__getitem__") and (name in self.obj):
+            val = self.obj[name]
 
         else:
-            raise AttributeError(name)
+            val = None
 
-        return callable(value) and value() or value
+        return callable(val) and val() or val
 
     def __iter__(self):
         for column in self.table._meta.columns:
