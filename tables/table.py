@@ -12,6 +12,19 @@ class Table(object):
         self._object_list = object_list
         self._request = request
 
+        # if a request was provided, the parameters can override default
+        # settings, but not explicit keyword arguments. this is rather
+        # verbose right now, but will make more sense once the params
+        # are validated before being used.
+        if request is not None:
+            g = request.GET
+
+            if ("sort" in g) and ("sort" not in kwargs):
+                kwargs['order_by'] = g['sort']
+
+            if ("per-page" in g) and ("per_page" not in kwargs):
+                kwargs['per_page'] = int(g['per-page'])
+
         self._paginator = None
         self.page = page
 

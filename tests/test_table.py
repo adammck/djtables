@@ -4,6 +4,7 @@
 
 from tables.table import Table
 from tables.column import Column
+from django.http import HttpRequest, QueryDict
 
 
 DATA = [
@@ -18,7 +19,7 @@ class TestTable(Table):
     weapon = Column()
 
 
-def test_overrides_options():
+def test_kwargs_override_options():
     m = TestTable._meta.__dict__
     t1 = TestTable(per_page=1)
     t2 = TestTable(per_page=2)
@@ -28,6 +29,17 @@ def test_overrides_options():
 
     # check that the class meta hasn't been touched.
     assert TestTable._meta.__dict__ == m
+
+
+def test_request_override_options():
+    req = HttpRequest()
+    req.GET = QueryDict(
+        "sort=name&per-page=3",
+        encoding="utf-8")
+
+    t = TestTable(request=req)
+    assert t._meta.order_by == "name"
+    assert t._meta.per_page == 3
 
 
 def test_class_exposes_columns_via_meta():
