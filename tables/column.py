@@ -15,12 +15,14 @@ class Column(object):
         self.creation_counter = Column.creation_counter
         Column.creation_counter += 1
 
-
         self.bound_to = None
 
     def __lt__(self, other):
         """Allow columns to be sorted by order of creation."""
         return self.creation_counter < other.creation_counter
+
+    def __unicode__(self):
+        return self.name
 
     def bind_to(self, table, name):
         if self.bound_to is not None:
