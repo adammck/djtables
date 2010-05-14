@@ -2,7 +2,8 @@
 # vim: et ts=4 sw=4
 
 
-from nose.tools import raises
+from fudge import Fake
+from nose.tools import assert_raises
 from tables.column import Column
 
 
@@ -12,28 +13,40 @@ def test_sortable_by_order_of_creation():
 
 
 def test_can_be_bound():
-    c = Column()
-    c.bind_to(1, 2)
-    assert c.bound_to == (1, 2)
+    table  = Fake()
+    column = Column()
+
+    column.bind_to(table, "alpha")
+
+    assert column.is_bound == True
+    assert column.bound_to == (table, "alpha")
 
 
-@raises
 def test_raises_if_rebound():
-    c = Column()
-    c.bind_to(1, 2)
-    c.bind_to(3, 4)
+    table_a = Fake()
+    table_b = Fake()
+    column = Column()
+
+    column.bind_to(table_a, "beta")
+
+    assert_raises(AttributeError,
+        column.bind_to, table_b, "gamma")
 
 
 def test_can_be_explicitly_named():
-    c = Column(name="alpha")
-    assert c.name == "alpha"
+    column = Column(name="delta")
+    assert column.name == "delta"
 
 
 def test_can_be_named_by_binding():
-    c = Column()
-    c.bind_to(1, "beta")
-    assert c.name == "beta"
+    table  = Fake()
+    column = Column()
+
+    column.bind_to(table, "epsilon")
+
+    assert column.name == "epsilon"
 
 
 def test_renders_values_to_unicode():
-    assert Column().render(123) == "123"
+    assert Column().render(True) == u"True"
+    assert Column().render(123) == u"123"

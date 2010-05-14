@@ -3,6 +3,13 @@
 
 
 class Column(object):
+
+    """
+    This class represents a table column. It is responsible for holding
+    metadata, and rending table cells. Like Django's model fields, table
+    cells are usually created within the class which they are bound to.
+    """
+
     creation_counter = 0
 
     def __init__(self, name=None):
@@ -25,8 +32,14 @@ class Column(object):
         return self.name
 
     def bind_to(self, table, name):
+        """
+        Bind this column to a table, and assign it a name. This method
+        can only be called once per instance, because a Column cannot be
+        bound to multiple tables. (The sort order would be ambiguous.)
+        """
+
         if self.bound_to is not None:
-            raise TypeError(
+            raise AttributeError(
                 "Column is already bound to '%s' as '%s'" %\
                     self.bound_to)
 
@@ -34,6 +47,7 @@ class Column(object):
 
     @property
     def is_bound(self):
+        """Return true if this column is bound to a table."""
         return (self.bound_to is not None)
 
     @property
