@@ -60,7 +60,10 @@ def test_is_iterable():
     }
 
     row = Row(TestTable(), data)
-    assert iter(row)
+
+    for cell in row:
+        assert cell.row == row
+        assert cell.value in data.values()
 
 
 def test_has_length():
