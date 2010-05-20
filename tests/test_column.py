@@ -50,3 +50,7 @@ def test_can_be_named_by_binding():
 def test_renders_values_to_unicode():
     assert Column().render(True) == u"True"
     assert Column().render(123) == u"123"
+
+
+def test_renders_name_to_unicode():
+    assert unicode(Column('zeta')) == u"zeta"
