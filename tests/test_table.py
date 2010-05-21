@@ -34,7 +34,7 @@ def test_kwargs_override_options():
 def test_request_override_options():
     req = HttpRequest()
     req.GET = QueryDict(
-        "sort=name&per-page=3",
+        "order_by=name&per_page=3",
         encoding="utf-8")
 
     t = TestTable(request=req)
