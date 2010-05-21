@@ -5,7 +5,7 @@
 import copy
 
 
-def parse(query_dict, prefix=""):
+def extract(query_dict, prefix=""):
     """
     Extract the *order_by*, *per_page*, and *page* parameters from
     `query_dict` (a Django QueryDict), and return a dict suitable for

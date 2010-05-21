@@ -3,7 +3,7 @@
 
 
 from .metatable import MetaTable
-from .urls import parse
+from .urls import extract
 
 
 class Table(object):
@@ -16,7 +16,7 @@ class Table(object):
 
         if request is not None:
             kwargs = dict(
-                parse(request.GET),
+                extract(request.GET),
                 **kwargs)
 
         if len(kwargs):
