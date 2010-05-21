@@ -40,7 +40,6 @@ class Options(object):
         if name in self._defaults:  object.__setattr__(self, name, value)
         else:  raise AttributeError("Invalid option: %s" % name)
 
-
     def fork(self, **kwargs):
         return self.__class__(self, **kwargs)
 
@@ -50,8 +49,10 @@ class TableOptions(Options):
         'paginator_class': Paginator,
         'row_class': Row,
         'cell_class': Cell,
+
         'order_by': None,
         'per_page': 20,
+        'page': 1,
+
         'columns': []
     }
-

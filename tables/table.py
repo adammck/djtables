@@ -8,9 +8,12 @@ from .metatable import MetaTable
 class Table(object):
     __metaclass__ = MetaTable
 
-    def __init__(self, object_list=None, request=None, page=1, **kwargs):
+    def __init__(self, object_list=None, request=None, **kwargs):
         self._object_list = object_list
         self._request = request
+        self._paginator = None
+
+        
 
         # if a request was provided, the parameters can override default
         # settings, but not explicit keyword arguments. this is rather
@@ -25,8 +28,8 @@ class Table(object):
             if ("per-page" in g) and ("per_page" not in kwargs):
                 kwargs['per_page'] = int(g['per-page'])
 
-        self._paginator = None
-        self.page = page
+            if ("page" in g) and ("page" not in kwargs):
+                kwargs['page'] = int(g['page'])
 
         if len(kwargs):
             self._meta = self._meta.fork(
@@ -56,7 +59,7 @@ class Table(object):
 
         return map(
             lambda o: self._meta.row_class(self, o),
-            self.paginator.page(self.page).object_list
+            self.paginator.page(self._meta.page).object_list
         )
 
     def cell(self, column, row):
