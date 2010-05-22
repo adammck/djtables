@@ -12,8 +12,9 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None):
+    def __init__(self, name=None, sortable=True):
         self._name = name
+        self.sortable = sortable
 
         # like django fields, keep track of the order which columns are
         # created, so they can be sorted later. (unfortunately, python
