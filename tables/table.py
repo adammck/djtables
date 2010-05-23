@@ -25,14 +25,23 @@ class Table(object):
 
     @property
     def object_list(self):
-        """Return the full object_list."""
-        return self._object_list
+        """
+        Return this table's object_list, transformed (sorted, reversed,
+        filtered, etc) according to its meta options.
+        """
+
+        ol = self._object_list
+
+        if self._meta.order_by:
+            ol = ol.order_by(self._meta.order_by)
+
+        return ol
 
     @property
     def paginator(self):
         if self._paginator is None:
             self._paginator = self._meta.paginator_class(
-                self._object_list, self._meta.per_page)
+                self.object_list, self._meta.per_page)
 
         return self._paginator
 
