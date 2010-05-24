@@ -99,3 +99,17 @@ def test_spawns_cells():
 
     assert c.column == 111
     assert c.row    == 222
+
+
+def test_builds_urls():
+    req = HttpRequest()
+    req.GET = QueryDict("a=1", encoding="utf-8")
+    req.path = "/"
+
+    t = TestTable(request=req)
+
+    assert t.get_url() == "/?a=1"
+    assert t.get_url(a=2) == "/?a=2"
+
+    # either is valid, since param order is undefined.
+    assert t.get_url(b=3) in ["/?a=1&b=3", "/?b=3&a=1"]

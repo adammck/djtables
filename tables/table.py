@@ -3,7 +3,7 @@
 
 
 from .metatable import MetaTable
-from .urls import extract
+from .urls import extract, build
 
 
 class Table(object):
@@ -22,6 +22,18 @@ class Table(object):
         if len(kwargs):
             self._meta = self._meta.fork(
                 **kwargs)
+
+    def get_url(self, **kwargs):
+        """
+        Return an url, relative to the request associated with this
+        table. Any keywords arguments provided added to the query
+        string, replacing existing values.
+        """
+
+        return build(
+            self._request.path,
+            self._request.GET,
+            **kwargs)
 
     @property
     def object_list(self):

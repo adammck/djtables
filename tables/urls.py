@@ -35,9 +35,8 @@ def build(path, query_dict, prefix="", **kwargs):
     query_dict = _copy(
         query_dict)
 
-    for key in ['order_by', 'per_page', 'page']:
-        if key in kwargs:
-            query_dict[prefix + key] = kwargs[key]
+    for key in kwargs:
+        query_dict[prefix + key] = kwargs[key]
 
     return "%s?%s" % (path, query_dict.urlencode())\
         if query_dict else path
