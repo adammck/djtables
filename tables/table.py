@@ -2,6 +2,7 @@
 # vim: et ts=4 sw=4
 
 
+from django.template.loader import render_to_string
 from .metatable import MetaTable
 from .urls import extract, build
 
@@ -48,6 +49,11 @@ class Table(object):
             ol = ol.order_by(self._meta.order_by)
 
         return ol
+
+    def as_html(self):
+        return render_to_string(
+            self._meta.template,
+            { "table": self })
 
     @property
     def paginator(self):

@@ -54,5 +54,7 @@ class TableOptions(Options):
         'per_page': 20,
         'page': 1,
 
+        "template": "djangotables/table.html",
+
         'columns': []
     }
