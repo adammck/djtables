@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title></title>
+        <style>
+            body {
+                font: 9pt sans-serif;
+                background: #ddd;
+                padding: 1em;
+            }
+
+                h1 {
+                    font-size: 4em;
+                    font-weight: normal;
+                    float: right;
+                    margin: 0;
+                    color: #ccc;
+                }
+
+                table {
+                    border-collapse: collapse;
+                    border: 1px solid #000;
+                    background: #fff;
+                }
+
+                    col.sorted {
+                        background: #ffe;
+                    }
+
+                    th, td {
+                        padding: 0.5em;
+                        border: 1px solid #000;
+                    }
+
+                    thead th {
+                        background: #000;
+                        font-weight: normal;
+                        text-align: left;
+                    }
+
+                        thead a,
+                        thead span.unsortable {
+                            display: block;
+                            margin: -0.5em;
+                            padding: 0.5em;
+                            color: #ccc;
+                            text-decoration: none;
+                        }
+
+                        thead th.sorted a {
+                            font-weight: bold;
+                            color: #fff;
+                        }
+
+                    tfoot td {
+                        background: #eee;
+                    }
+        </style>
+    </head>
+    <body>
+{% block content %}
+{% endblock %}
+    </body>
+</html>

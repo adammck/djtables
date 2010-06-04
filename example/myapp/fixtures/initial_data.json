@@ -1,0 +1,112 @@
+[
+    {
+        "pk": 1,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "John Suarez",
+            "dob":    "1955-05-02",
+            "gender": "M",
+            "phone":  "767-34-6195",
+            "email":  "j.suarez@dodgit.com"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Daniel Otwell",
+            "dob":    "1970-11-02",
+            "gender": "M",
+            "phone":  "456-17-5056",
+            "email":  "d.otwell@mailinator.com"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Gwendolyn Lovell",
+            "dob":    "1948-12-28",
+            "gender": "F",
+            "phone":  "507-58-6179",
+            "email":  "g.lovell@pookmail.com"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Elmer Turner",
+            "dob":    "1984-05-17",
+            "gender": "F",
+            "phone":  "215-930-1553",
+            "email":  "e.turner@spambob.com"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Wayne Randle",
+            "dob":    "1981-05-31",
+            "gender": "M",
+            "phone":  "320-843-4275",
+            "email":  "w.randle@spambob.com"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Alice Wilson",
+            "dob":    "1940-07-11",
+            "gender": "F",
+            "phone":  "401-665-2676",
+            "email":  "a.wilson@pookmail.com"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Hunter Johns",
+            "dob":    "1951-11-08",
+            "gender": "M",
+            "phone":  "336-295-4424",
+            "email":  "h.johns@trashymail.com"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Karl Perkins",
+            "dob":    "1952-05-06",
+            "gender": "M",
+            "phone":  "507-588-0108",
+            "email":  "k.perkins@spambob.com"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Christopher Green",
+            "dob":    "1963-09-05",
+            "gender": "M",
+            "phone":  "601-931-2149",
+            "email":  "c.green@mailinator.com"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "myapp.human",
+        "fields": {
+            "name":   "Florence Tibbetts",
+            "dob":    "1970-07-09",
+            "gender": "F",
+            "phone":  "641-422-7879",
+            "email":  "f.tibbetts@pookmail.com"
+        }
+    }
+]
