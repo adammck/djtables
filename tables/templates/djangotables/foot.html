@@ -1,0 +1,9 @@
+<tfoot>
+    <tr>
+        <td colspan="{{ table.columns|length }}">
+            <div class="paginator">{% for page in pages %}{% if page.is_active %}
+                <span>{{ page.number }}</span>{% else %}<a href="{{ page.url }}">{{ page.number }}</a>{% endif %}{% endfor %}
+            </div>
+        </td>
+    </tr>
+</tfoot>
