@@ -70,6 +70,15 @@ def test_returns_object_list():
     assert d == DATA
 
 
+def test_sorts_sortable_object_list():
+    class MockData(object):
+        def order_by(self, column):
+            return 111
+
+    t = TestTable(MockData(), order_by="name")
+    assert t.object_list == 111
+
+
 def test_returns_rows():
     class MockRow(object):
         def __init__(self, table, obj):
