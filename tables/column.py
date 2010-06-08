@@ -63,3 +63,29 @@ class Column(object):
         classes to do something more useful.
         """
         return unicode(value)
+
+
+class BoundColumn(object):
+
+    """
+    This class binds  Table instance to a Column instance.
+    """
+
+    def __init__(self, table, column):
+        self.table = table
+        self.column = column
+
+    def sort_url(self):
+        return self.table.get_url(order_by=self.column.name)
+
+    def is_sorted(self):
+        return self.table._meta.order_by == self.column.name
+
+    def sort_direction(self):
+        return "asc"
+
+    def __unicode__(self):
+        return unicode(self.column)
+
+    def __getattr__(self, name):
+        return getattr(self.column, name)
