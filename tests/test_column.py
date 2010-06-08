@@ -86,6 +86,12 @@ def test_wrapped_column_is_sorted_via_table():
     assert wrapped_column_a.sort_direction == "asc"
     assert wrapped_column_b.sort_direction == None
 
+    meta.has_attr(order_by="-mu")
+    assert wrapped_column_a.is_sorted == False
+    assert wrapped_column_b.is_sorted == True
+    assert wrapped_column_a.sort_direction == None
+    assert wrapped_column_b.sort_direction == "desc"
+
 
 def test_wrapped_column_has_sort_url():
     table  = Fake().provides("get_url").calls(

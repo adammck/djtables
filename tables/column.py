@@ -84,15 +84,36 @@ class WrappedColumn(object):
 
     @property
     def sort_url(self):
+        """
+        Return the URL to sort the linked table by this column. If the
+        table is already sorted by this column, the order is reversed.
+
+        Since there is no canonical URL for a table the current URL (via
+        the HttpRequest linked to the Table instance) is reused, and any
+        unrelated parameters will be included in the output.
+        """
+
         return self.table.get_url(order_by=self.column.name)
 
     @property
     def is_sorted(self):
-        return self.table._meta.order_by == self.column.name
+        return self.sort_direction is not None
 
     @property
     def sort_direction(self):
-        return "asc"
+        """
+        Return the direction in which the linked table is is sorted by
+        this column ("asc" or "desc"), or None this column is unsorted.
+        """
+
+        if self.table._meta.order_by == self.name:
+            return "asc"
+
+        elif self.table._meta.order_by == ("-" + self.name):
+            return "desc"
+
+        else:
+            return None
 
     def __unicode__(self):
         return unicode(self.column)
