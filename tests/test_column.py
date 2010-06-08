@@ -58,7 +58,7 @@ def test_renders_name_to_unicode():
 
 def test_wrapped_column_wraps_column_attrs():
     table  = Fake()
-    column = Fake().has_attr(eta=123).provides("__unicode__").returns("theta")
+    column = Fake().has_attr(eta=123)
 
     wrapped_column = WrappedColumn(table, column)
     wrapped_column.iota = 456
@@ -66,8 +66,10 @@ def test_wrapped_column_wraps_column_attrs():
     assert wrapped_column.eta == 123
     assert wrapped_column.iota == 456
 
-    assert unicode(column) == "theta"
-    assert unicode(wrapped_column) == "theta"
+    # this isn't a very good test. because __magic__ methods can't be
+    # mocked by fudge, we'll just check unicode(WrappedColumn) returns
+    # the predictable output of unicode(Fake).
+    assert unicode(wrapped_column) == "fake:column"
 
 
 def test_wrapped_column_is_sorted_via_table():
