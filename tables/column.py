@@ -68,7 +68,14 @@ class Column(object):
 class BoundColumn(object):
 
     """
-    This class binds  Table instance to a Column instance.
+    This class wraps a Column instance, and binds it to a Table instance
+    to provide useful properties to the template. This represents a per-
+    render instance of the column, containing its volatile state, such
+    as sort order. (More properties, such as visibility, filtering, and
+    grouping may come later.)
+
+    All of the attributes (and methods) of the wrapped Column can be
+    accessed via this class, with help from some __getattr__ magic.
     """
 
     def __init__(self, table, column):
