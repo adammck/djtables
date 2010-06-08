@@ -18,11 +18,11 @@ class Table(object):
         if request is not None:
             kwargs = dict(
                 extract(request.GET),
-                **kwargs)
+                **kwargs )
 
         if len(kwargs):
             self._meta = self._meta.fork(
-                **kwargs)
+                **kwargs )
 
     def get_url(self, **kwargs):
         """
@@ -34,7 +34,7 @@ class Table(object):
         return build(
             self._request.path,
             self._request.GET,
-            **kwargs)
+            **kwargs )
 
     @property
     def object_list(self):
@@ -46,20 +46,20 @@ class Table(object):
         ol = self._object_list
 
         if self._meta.order_by:
-            ol = ol.order_by(self._meta.order_by)
+            ol = ol.order_by(self._meta.order_by )
 
         return ol
 
     def as_html(self):
         return render_to_string(
             self._meta.template,
-            { "table": self })
+            { "table": self } )
 
     @property
     def paginator(self):
         if self._paginator is None:
             self._paginator = self._meta.paginator_class(
-                self.object_list, self._meta.per_page)
+                self.object_list, self._meta.per_page )
 
         return self._paginator
 
@@ -74,9 +74,8 @@ class Table(object):
 
         return map(
             lambda o: self._meta.row_class(self, o),
-            self.paginator.page(self._meta.page).object_list
-        )
+            self.paginator.page(self._meta.page).object_list )
 
     def cell(self, column, row):
         return self._meta.cell_class(
-            column, row)
+            column, row )
