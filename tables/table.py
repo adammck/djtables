@@ -46,11 +46,18 @@ class Table(object):
         ol = self._object_list
 
         if self._meta.order_by:
-            ol = ol.order_by(self._meta.order_by )
+            ol = ol.order_by(self._meta.order_by)
 
         return ol
 
-    def as_html(self):
+    def as_html(self): # pragma: no cover
+        """
+        Return this table as HTML, ready to be inserted into a template.
+        To customize the output, set the ``template`` meta option to a
+        new template, and use the table_tags to build your own template.
+        See README for examples.
+        """
+
         return render_to_string(
             self._meta.template,
             { "table": self } )
