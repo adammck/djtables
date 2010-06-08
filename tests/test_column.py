@@ -94,10 +94,17 @@ def test_wrapped_column_is_sorted_via_table():
 
 
 def test_wrapped_column_has_sort_url():
-    table  = Fake().provides("get_url").calls(
-        lambda order_by: ["nu", order_by])
-    column = Fake().has_attr(name="xi")
+    meta   = Fake().has_attr(order_by="nu")
+    table  = Fake().has_attr(_meta=meta)
+    column_a = Fake().has_attr(name="nu")
+    column_b = Fake().has_attr(name="xi")
 
-    wrapped_column = WrappedColumn(table, column)
+    # mock out url building, to avoid awakening django.
+    table.provides("get_url").calls(
+        lambda order_by: ["omicron", order_by])
 
-    assert wrapped_column.sort_url == ["nu", "xi"]
+    wrapped_column_a = WrappedColumn(table, column_a)
+    wrapped_column_b = WrappedColumn(table, column_b)
+
+    assert wrapped_column_a.sort_url == ["omicron", "-nu"]
+    assert wrapped_column_b.sort_url == ["omicron", "xi"]

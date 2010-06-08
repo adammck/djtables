@@ -93,7 +93,8 @@ class WrappedColumn(object):
         unrelated parameters will be included in the output.
         """
 
-        return self.table.get_url(order_by=self.column.name)
+        prefix = (self.sort_direction == "asc") and "-" or ""
+        return self.table.get_url(order_by=prefix + self.name)
 
     @property
     def is_sorted(self):
