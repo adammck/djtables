@@ -65,7 +65,7 @@ class Column(object):
         return unicode(value)
 
 
-class BoundColumn(object):
+class WrappedColumn(object):
 
     """
     This class wraps a Column instance, and binds it to a Table instance
@@ -82,12 +82,15 @@ class BoundColumn(object):
         self.table = table
         self.column = column
 
+    @property
     def sort_url(self):
         return self.table.get_url(order_by=self.column.name)
 
+    @property
     def is_sorted(self):
         return self.table._meta.order_by == self.column.name
 
+    @property
     def sort_direction(self):
         return "asc"
 
