@@ -5,14 +5,14 @@
 from django import template
 register = template.Library()
 
-from ..column import BoundColumn
+from ..column import WrappedColumn
 
 
 @register.inclusion_tag("djangotables/cols.html")
 def table_cols(table):
     return {
         "columns": [
-            BoundColumn(table, column)
+            WrappedColumn(table, column)
             for column in table.columns ] }
 
 
@@ -20,7 +20,7 @@ def table_cols(table):
 def table_head(table):
     return {
         "columns": [
-            BoundColumn(table, column)
+            WrappedColumn(table, column)
             for column in table.columns ] }
 
 
@@ -35,12 +35,12 @@ def table_body(table):
 def table_foot(table):
     return {
         "pages": [
-            PageStub(table, number)
+            WrappedPage(table, number)
             for number in table.paginator.page_range ],
         "num_columns": len(table.columns) }
 
 
-class PageStub(object):
+class WrappedPage(object):
     def __init__(self, table, number):
         self.table = table
         self.number = number
