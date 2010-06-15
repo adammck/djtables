@@ -110,6 +110,11 @@ def test_spawns_cells():
     assert c.row    == 222
 
 
+def test_accepts_prefix():
+    t = TestTable(prefix="a")
+    assert t._meta.prefix == "a"
+
+
 def test_builds_urls():
     req = HttpRequest()
     req.GET = QueryDict("a=1", encoding="utf-8")

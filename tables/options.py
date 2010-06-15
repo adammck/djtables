@@ -50,6 +50,7 @@ class TableOptions(Options):
         'row_class': Row,
         'cell_class': Cell,
 
+        'prefix': "",
         'order_by': None,
         'per_page': 20,
         'page': 1,

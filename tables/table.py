@@ -16,9 +16,8 @@ class Table(object):
         self._paginator = None
 
         if request is not None:
-            kwargs = dict(
-                extract(request.GET),
-                **kwargs )
+            prefix = kwargs.get('prefix', "")
+            kwargs = dict(extract(request.GET, prefix), **kwargs)
 
         if len(kwargs):
             self._meta = self._meta.fork(
@@ -34,6 +33,7 @@ class Table(object):
         return build(
             self._request.path,
             self._request.GET,
+            self._meta.prefix,
             **kwargs )
 
     @property
@@ -45,7 +45,7 @@ class Table(object):
 
         ol = self._object_list
 
-        if self._meta.order_by:
+        if self._meta.order_by and hasattr(ol, "order_by"):
             ol = ol.order_by(self._meta.order_by)
 
         return ol
