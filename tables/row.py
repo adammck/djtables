@@ -19,6 +19,9 @@ class Row(object):
 
         return callable(val) and val() or val
 
+    def __unicode__(self):
+        return unicode(self.obj)
+
     def __iter__(self):
         for column in self.table._meta.columns:
             yield self.table.cell(column, self)

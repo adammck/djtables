@@ -30,11 +30,15 @@ def test_accepts_objects():
             self.name = name
             self.weapon = weapon
 
+        def __unicode__(self):
+            return self.name
+
     obj = MockObject("Michelangelo", "Nunchaku")
     row = Row(TestTable(), obj)
 
     assert row.name == obj.name
     assert row.weapon == obj.weapon
+    assert unicode(row) == unicode(obj)
 
 
 def test_calls_callables():
