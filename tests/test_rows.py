@@ -3,9 +3,9 @@
 
 
 from nose.tools import raises
-from tables.table import Table
-from tables.column import Column
-from tables.row import Row
+from djangotables.table import Table
+from djangotables.column import Column
+from djangotables.row import Row
 
 
 class TestTable(Table):

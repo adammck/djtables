@@ -3,7 +3,7 @@
 
 
 from nose.tools import raises
-from tables.options import Options
+from djangotables.options import Options
 
 
 class TestOptions(Options):
