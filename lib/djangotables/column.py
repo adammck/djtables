@@ -2,12 +2,15 @@
 # vim: et ts=4 sw=4
 
 
+import datetime
+
+
 class Column(object):
 
     """
     This class represents a table column. It is responsible for holding
-    metadata, and rending table cells. Like Django's model fields, table
-    cells are usually created within the class which they are bound to.
+    metadata, and rending table cells. Like Django model/fields, columns
+    are usually created within the table class which they are bound to.
     """
 
     creation_counter = 0
@@ -63,6 +66,27 @@ class Column(object):
         classes to do something more useful.
         """
         return unicode(value)
+
+
+class DateColumn(Column):
+
+    """
+    This class provides a simple way to render a Date field, using the
+    Django 'date' template filter. The ``format`` argument specifies the
+    string in ``Django date format``_, **not** ``Python date format``_.
+    If ``format`` is None the ``DATE_FORMAT`` setting is used.
+
+    .. `Django date format``: http://docs.djangoproject.com/en/dev/ref/templates/builtins/#ttag-now
+    .. `Python date format``: http://docs.python.org/library/datetime.html#strftime-strptime-behavior
+    """
+
+    def __init__(self, format=None, *args, **kwargs):
+        super(DateColumn, self).__init__(*args, **kwargs)
+        self._format = format
+
+    def render(self, value):
+        from django.template import defaultfilters
+        return defaultfilters.date(value, self._format)
 
 
 class WrappedColumn(object):
