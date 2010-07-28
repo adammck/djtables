@@ -117,3 +117,15 @@ def test_wrapped_column_has_sort_url():
 
     assert wrapped_column_a.sort_url == ["omicron", "-nu"]
     assert wrapped_column_b.sort_url == ["omicron", "xi"]
+
+
+def test_can_link():
+    cell = Fake().has_attr(value="xxx")
+    linked_column = Column(link=lambda cell: cell.value.upper())
+    unlinked_column = Column()
+
+    assert linked_column.has_link == True
+    assert linked_column.link(cell) == u"XXX"
+
+    assert unlinked_column.has_link == False
+    assert unlinked_column.link(cell) == None

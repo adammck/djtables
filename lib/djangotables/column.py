@@ -16,9 +16,10 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, sortable=True):
+    def __init__(self, name=None, value=None, link=None, sortable=True):
         self._name = name
         self._value = value
+        self._link = link
         self.sortable = sortable
 
         # like django fields, keep track of the order which columns are
@@ -84,6 +85,26 @@ class Column(object):
         """
 
         return unicode(self.value(cell))
+
+    @property
+    def has_link(self):
+        """Return True if this column contains links."""
+        return self._link is not None
+
+    def link(self, cell):
+        """
+        Return the URL which ``cell`` should link to, or None if this
+        column does not contain links.
+
+        If this Column was instantiated with a ``link`` attribute, it is
+        called here (with a single parameter of ``cell``), to provide
+        the value. Otherwise, None is returned.
+        """
+
+        if self.has_link:
+            return self._link(cell)
+
+        return None
 
 
 class DateColumn(Column):

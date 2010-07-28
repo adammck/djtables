@@ -1,6 +1,6 @@
 <tbody>{% if rows %}{% for row in rows %}
-    <tr>{% for value in row %}
-        <td>{{ value }}</td>{% endfor %}
+    <tr>{% for cell in row %}
+        <td>{% if cell.column.has_link %}<a href="{{ cell.link }}">{{ cell }}</a>{% else %}{{ cell }}{% endif %}</td>{% endfor %}
     </tr>{% endfor %}{% else %}
     <tr class="no-data">
         <td colspan="{{ num_columns }}">

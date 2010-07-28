@@ -22,3 +22,8 @@ class Cell(object):
     def value(self):
         """Return the value of this cell."""
         return getattr(self.row, self.column.name)
+
+    @property
+    def link(self):
+        """Return the URL which this cell links to."""
+        return self.column.link(self)

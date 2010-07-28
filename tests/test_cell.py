@@ -25,3 +25,16 @@ def test_renders_via_column():
         .returns("BBB"))
 
     assert unicode(cell) == u"BBB"
+
+
+def test_can_link():
+    column = Fake().has_attr(name="gamma")
+    row    = Fake().has_attr(gamma="ggg")
+    cell   = Cell(column, row)
+
+    (column
+        .provides("link")
+        .with_args(cell)
+        .returns("GGG"))
+
+    assert cell.link == u"GGG"
