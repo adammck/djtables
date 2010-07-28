@@ -3,6 +3,7 @@
 
 
 import datetime
+from django.template import defaultfilters
 
 
 class Column(object):
@@ -15,8 +16,9 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, sortable=True):
+    def __init__(self, name=None, value=None, sortable=True):
         self._name = name
+        self._value = value
         self.sortable = sortable
 
         # like django fields, keep track of the order which columns are
@@ -59,13 +61,26 @@ class Column(object):
         """Return the column name, whether explicit or implicit."""
         return self._name or self.bound_to[1]
 
+    def value(self, value):
+        """
+        Return ``value``, ready to be rendered. Subclasses or instances
+        may override this, to fudge the cell value before displaying it.
+        (For example, collating or splitting multiple fields into a
+        single column, or applying custom formatting before rendering.)
+        """
+
+        if self._value is not None:
+            return self._value(value)
+
+        return value
+
     def render(self, value):
         """
         Return ``value`` ready for display. The default behavior is to
         simply cast it to unicode, but this may be overridden by child
         classes to do something more useful.
         """
-        return unicode(value)
+        return unicode(self.value(value))
 
 
 class DateColumn(Column):
@@ -85,8 +100,9 @@ class DateColumn(Column):
         self._format = format
 
     def render(self, value):
-        from django.template import defaultfilters
-        return defaultfilters.date(value, self._format)
+        return defaultfilters.date(
+            self.value(value),
+            self._format)
 
 
 class WrappedColumn(object):

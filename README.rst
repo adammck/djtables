@@ -18,7 +18,7 @@ Your table(s) can be defined anywhere, but I like to keep them in a module named
 ...and that's it. Additional columns can be defined in the class body (like Django models and forms), and the Meta (options) class can be used to override the default behavior of the table. A more complex example::
 
   class UsersTable(tables.ModelTable):
-      age = tables.BooleanColumn(lambda u: u.get_age())
+      age = tables.BooleanColumn(value=lambda u: u.get_age())
 
       class Meta:
           model = User

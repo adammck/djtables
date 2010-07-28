@@ -52,6 +52,11 @@ def test_renders_values_to_unicode():
     assert Column().render(123) == u"123"
 
 
+def test_value_can_be_wrapped():
+    column = Column(value=lambda x: x.upper())
+    assert column.render("abc") == u"ABC"
+
+
 def test_renders_name_to_unicode():
     assert unicode(Column('zeta')) == u"zeta"
 
