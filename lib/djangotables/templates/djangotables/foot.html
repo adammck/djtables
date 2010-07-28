@@ -2,7 +2,8 @@
     <tr>
         <td colspan="{{ num_columns }}">
             <div class="paginator">{% for page in pages %}{% if page.is_active %}
-                <span>{{ page.number }}</span>{% else %}<a href="{{ page.url }}">{{ page.number }}</a>{% endif %}{% endfor %}
+                <span>{{ page.number }}</span>{% else %}
+                <a href="{{ page.url }}">{{ page.number }}</a>{% endif %}{% endfor %}
             </div>
         </td>
     </tr>
