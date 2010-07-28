@@ -7,4 +7,5 @@ import myapp.views
 
 
 urlpatterns = patterns("",
-    url("$", myapp.views.index) )
+    url(r"^$",           myapp.views.index, name="index"),
+    url(r"^(\d+)/edit$", myapp.views.edit,  name="edit") )
