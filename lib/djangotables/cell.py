@@ -19,6 +19,16 @@ class Cell(object):
         return unicode(self.column.render(self))
 
     @property
+    def object(self):
+        """
+        Return the object (via self.row) which this cell contains. This
+        property is included as a convenience, to make accessing the
+        original object (which this Cell wraps) more natural.
+        """
+
+        return self.row.obj
+
+    @property
     def value(self):
         """Return the value of this cell."""
         return getattr(self.row, self.column.name)

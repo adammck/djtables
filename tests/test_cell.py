@@ -14,6 +14,14 @@ def test_gets_value_from_row():
     assert cell.value == "aaa"
 
 
+def test_proxies_object_from_row():
+    column = Fake().has_attr()
+    row    = Fake().has_attr(obj="xyz")
+    cell   = Cell(column, row)
+
+    assert cell.object == "xyz"
+
+
 def test_renders_via_column():
     column = Fake().has_attr(name="beta")
     row    = Fake().has_attr(beta="bbb")
