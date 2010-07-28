@@ -6,14 +6,27 @@ import datetime
 from djangotables.column import DateColumn
 
 
-# hackery: since this column uses a django template filter, we must
-# configure the django settings explicitly before testing it.
+# override the django DATE_FORMAT setting to make it predictable.
 def setup():
     from django.conf import settings
-    settings.configure()
+    settings.__old_date_format = settings.DATE_FORMAT
+    settings.DATE_FORMAT = "Y-m-d"
+
+
+# restore the previous setting, to avoid screwing with global state.
+def teardown():
+    from django.conf import settings
+    settings.DATE_FORMAT = settings.__old_date_format
+    del settings.__old_date_format
 
 
 def test_datecolumn_formats_dates():
     date = datetime.date(2010, 1, 1)
     column = DateColumn(format="D d M Y")
     assert column.render(date) == "Fri 01 Jan 2010"
+
+
+def test_datecolumn_defaults_to_DATE_FORMAT():
+    date = datetime.date(2010, 1, 1)
+    column = DateColumn()
+    assert column.render(date) == "2010-01-01"
