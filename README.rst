@@ -1,24 +1,38 @@
-Tables for Django
-=================
+Declarative Tables for Django
+=============================
 
 This is a Django app which renders querysets (and other sequences) into semantic HTML tables. It provides an API for defining tables (similar to django.forms), and template tags for rendering them.
 
-Unlike the other django-tables projects which i've encountered (and I really would prefer to contribute to them, rather than building my own), this app prioritizes drop-in convenience over flexibility.
+This repo is **not** a fork of `Michael Elsdörfer's django-tables project`_. The two projects provide similar-looking interfaces, but are philosophically quite different. (I'm attempting to provide considerably more drop-in functionality, probably at the cost of tighter coupling.) You should definitely check out Michael's project. It's better documented than mine.
+
+.. _Michael Elsdörfer's django-tables project: http://github.com/miracle2k/django-tables
+
+
+Example
+-------
+
+This repo includes a demo Django project, which uses DjangoTables to display a sortable, paginated table of fictional people. It should be running at:
+
+  http://djangotables.adammck.com
+
+
+Usage
+=====
 
 
 Defining Your Tables
-====================
+--------------------
 
 Your table(s) can be defined anywhere, but I like to keep them in a module named "tables.py" in your app. The most common use-case is to display a list of the instances of a model. Luckily, this is simple::
 
-  class UsersTable(tables.ModelTable):
+  class UsersTable(djangotables.ModelTable):
       class Meta:
           model = Human
 
 ...and that's it. Additional columns can be defined in the class body (like Django models and forms), and the Meta (options) class can be used to override the default behavior of the table. A more complex example::
 
-  class UsersTable(tables.ModelTable):
-      age = tables.BooleanColumn(value=lambda u: u.get_age())
+  class UsersTable(djangotables.ModelTable):
+      age = djangotables.BooleanColumn(value=lambda u: u.get_age())
 
       class Meta:
           model = User
@@ -30,7 +44,7 @@ Your table(s) can be defined anywhere, but I like to keep them in a module named
 
 
 Instantiating a Table in Your View
-==================================
+----------------------------------
 
 Here's where it gets awesome. Since the table class already knows which model it's rendering, you don't need to fuss around extracting the GET parameters, fetching a queryset, sorting it, and paginating it. Just instantiate the table, and it and pass it along to the template::
 
@@ -63,7 +77,7 @@ Both tables are rendered as usual, except the GET parameters used to navigate th
 
 
 Rendering a Table in Your Template
-==================================
+----------------------------------
 
 If you don't have any special requirements for the HTML output, tables can render themselves like a Django form::
 
@@ -83,4 +97,4 @@ Any part of this template can be replaced with your own, without having to repla
 
 License
 =======
-Django-Tables is free software, available under the BSD license.
+DjangoTables is free software, available under the BSD license.
