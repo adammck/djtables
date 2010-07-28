@@ -21,7 +21,7 @@ def test_renders_via_column():
 
     (column
         .provides("render")
-        .with_args("bbb")
+        .with_args(cell)
         .returns("BBB"))
 
     assert unicode(cell) == u"BBB"

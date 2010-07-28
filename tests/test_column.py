@@ -48,13 +48,17 @@ def test_can_be_named_by_binding():
 
 
 def test_renders_values_to_unicode():
-    assert Column().render(True) == u"True"
-    assert Column().render(123) == u"123"
+    bool_cell = Fake().has_attr(value=True)
+    int_cell = Fake().has_attr(value=123)
+
+    assert Column().render(bool_cell) == u"True"
+    assert Column().render(int_cell) == u"123"
 
 
 def test_value_can_be_wrapped():
-    column = Column(value=lambda x: x.upper())
-    assert column.render("abc") == u"ABC"
+    cell = Fake().has_attr(value="abc")
+    column = Column(value=lambda cell: cell.value.upper())
+    assert column.render(cell) == u"ABC"
 
 
 def test_renders_name_to_unicode():

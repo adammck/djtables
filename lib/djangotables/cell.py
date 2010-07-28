@@ -16,7 +16,7 @@ class Cell(object):
 
     def __unicode__(self):
         """Return the rendered (via self.column) value of this cell."""
-        return unicode(self.column.render(self.value))
+        return unicode(self.column.render(self))
 
     @property
     def value(self):

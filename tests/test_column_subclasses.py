@@ -3,6 +3,7 @@
 
 
 import datetime
+from fudge import Fake
 from djangotables.column import DateColumn
 
 
@@ -22,11 +23,13 @@ def teardown():
 
 def test_datecolumn_formats_dates():
     date = datetime.date(2010, 1, 1)
+    cell = Fake().has_attr(value=date)
     column = DateColumn(format="D d M Y")
-    assert column.render(date) == "Fri 01 Jan 2010"
+    assert column.render(cell) == "Fri 01 Jan 2010"
 
 
 def test_datecolumn_defaults_to_DATE_FORMAT():
     date = datetime.date(2010, 1, 1)
+    cell = Fake().has_attr(value=date)
     column = DateColumn()
-    assert column.render(date) == "2010-01-01"
+    assert column.render(cell) == "2010-01-01"

@@ -61,26 +61,29 @@ class Column(object):
         """Return the column name, whether explicit or implicit."""
         return self._name or self.bound_to[1]
 
-    def value(self, value):
+    def value(self, cell):
         """
-        Return ``value``, ready to be rendered. Subclasses or instances
-        may override this, to fudge the cell value before displaying it.
-        (For example, collating or splitting multiple fields into a
-        single column, or applying custom formatting before rendering.)
+        Extract the value of ``cell``, ready to be rendered.
+
+        If this Column was instantiated with a ``value`` attribute, it
+        is called here to provide the value. (For example, to provide a
+        calculated value.) Otherwise, ``cell.value`` is returned.
         """
 
         if self._value is not None:
-            return self._value(value)
+            return self._value(cell)
 
-        return value
+        else:
+            return cell.value
 
-    def render(self, value):
+    def render(self, cell):
         """
-        Return ``value`` ready for display. The default behavior is to
-        simply cast it to unicode, but this may be overridden by child
-        classes to do something more useful.
+        Render ``cell``, ready for display. The default behavior is to
+        simply cast its value to unicode, but this may be overridden by
+        child classes to do something more useful.
         """
-        return unicode(self.value(value))
+
+        return unicode(self.value(cell))
 
 
 class DateColumn(Column):
@@ -99,9 +102,9 @@ class DateColumn(Column):
         super(DateColumn, self).__init__(*args, **kwargs)
         self._format = format
 
-    def render(self, value):
+    def render(self, cell):
         return defaultfilters.date(
-            self.value(value),
+            self.value(cell),
             self._format)
 
 
