@@ -8,7 +8,7 @@ register = template.Library()
 from ..column import WrappedColumn
 
 
-@register.inclusion_tag("djangotables/cols.html")
+@register.inclusion_tag("djtables/cols.html")
 def table_cols(table):
     return {
         "columns": [
@@ -16,7 +16,7 @@ def table_cols(table):
             for column in table.columns ] }
 
 
-@register.inclusion_tag("djangotables/head.html")
+@register.inclusion_tag("djtables/head.html")
 def table_head(table):
     return {
         "columns": [
@@ -24,14 +24,14 @@ def table_head(table):
             for column in table.columns ] }
 
 
-@register.inclusion_tag("djangotables/body.html")
+@register.inclusion_tag("djtables/body.html")
 def table_body(table):
     return {
         "rows": table.rows,
         "num_columns": len(table.columns) }
 
 
-@register.inclusion_tag("djangotables/foot.html")
+@register.inclusion_tag("djtables/foot.html")
 def table_foot(table):
     return {
         "pages": [

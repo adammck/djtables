@@ -2,9 +2,9 @@
 # vim: et ts=4 sw=4
 
 
-from djangotables.table import Table
-from djangotables.column import Column
 from django.http import HttpRequest, QueryDict
+from djtables.table import Table
+from djtables.column import Column
 
 
 DATA = [

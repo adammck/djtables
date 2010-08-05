@@ -4,7 +4,7 @@
 
 from fudge import Fake
 from nose.tools import assert_raises
-from djangotables.column import Column, WrappedColumn
+from djtables.column import Column, WrappedColumn
 
 
 def test_sortable_by_order_of_creation():

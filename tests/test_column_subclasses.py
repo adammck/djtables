@@ -4,7 +4,7 @@
 
 import datetime
 from fudge import Fake
-from djangotables.column import DateColumn
+from djtables.column import DateColumn
 
 
 # override the django DATE_FORMAT setting to make it predictable.

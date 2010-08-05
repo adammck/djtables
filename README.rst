@@ -1,5 +1,5 @@
-Declarative Tables for Django
-=============================
+DjTables: Declarative Tables for Django
+=======================================
 
 This is a Django app which renders querysets (and other sequences) into semantic HTML tables. It provides an API for defining tables (similar to django.forms), and template tags for rendering them.
 
@@ -11,9 +11,9 @@ This repo is **not** a fork of `Michael Elsdörfer's django-tables project`_. Th
 Example
 -------
 
-This repo includes a demo Django project, which uses DjangoTables to display a sortable, paginated table of fictional people. It should be running at:
+This repo includes a demo Django project, which uses DjTables to display a sortable, paginated table of fictional people. It should be running at:
 
-  http://djangotables.adammck.com
+  http://djtables.adammck.com
 
 
 Usage
@@ -25,14 +25,14 @@ Defining Your Tables
 
 Your table(s) can be defined anywhere, but I like to keep them in a module named "tables.py" in your app. The most common use-case is to display a list of the instances of a model. Luckily, this is simple::
 
-  class UsersTable(djangotables.ModelTable):
+  class UsersTable(djtables.ModelTable):
       class Meta:
           model = Human
 
 ...and that's it. Additional columns can be defined in the class body (like Django models and forms), and the Meta (options) class can be used to override the default behavior of the table. A more complex example::
 
-  class UsersTable(djangotables.ModelTable):
-      age = djangotables.BooleanColumn(value=lambda u: u.get_age())
+  class UsersTable(djtables.ModelTable):
+      age = djtables.BooleanColumn(value=lambda u: u.get_age())
 
       class Meta:
           model = User
@@ -97,4 +97,4 @@ Any part of this template can be replaced with your own, without having to repla
 
 License
 =======
-DjangoTables is free software, available under the BSD license.
+djtables is free software, available under the BSD license.

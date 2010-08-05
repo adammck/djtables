@@ -2,7 +2,7 @@
 # vim: et ts=4 sw=4
 
 
-from djangotables.metatable import MetaTable
+from djtables.metatable import MetaTable
 
 
 class MockOptions(object):

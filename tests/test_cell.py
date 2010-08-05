@@ -3,7 +3,7 @@
 
 
 from fudge import Fake
-from djangotables.cell import Cell
+from djtables.cell import Cell
 
 
 def test_gets_value_from_row():

@@ -14,5 +14,5 @@ ROOT_URLCONF = "urls"
 
 
 INSTALLED_APPS = (
-    "djangotables",
+    "djtables",
     "myapp" )

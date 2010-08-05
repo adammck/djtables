@@ -6,7 +6,7 @@ from setuptools import setup
 
 
 setup(
-    name="django-tables",
+    name="djtables",
     version="0.1.0",
     license="CC0",
 
@@ -14,5 +14,5 @@ setup(
     author_email="adam.mckaig@gmail.com",
 
     description="Declarative HTML table builder for Django",
-    url="http://github.com/adammck/django-tables",
-    packages=["djangotables"])
+    url="http://github.com/adammck/djtables",
+    packages=["lib/djtables"])

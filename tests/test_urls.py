@@ -3,7 +3,7 @@
 
 
 from django.http import QueryDict
-from djangotables.urls import extract, build
+from djtables.urls import extract, build
 
 
 def test_returns_empty_dict():
