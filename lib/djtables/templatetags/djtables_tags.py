@@ -48,6 +48,28 @@ class WrappedPage(object):
     @property
     def is_active(self):
         return self.table._meta.page == self.number
-
+    
+    @property
+    def current_page_number(self):
+        return self.table._meta.page
+    
+    @property
+    def first_page_url(self):
+        return self.table.get_url(page=1)
+    
+    @property
+    def previous_page_url(self):
+        if self.table.paginator.page(self.current_page_number).has_previous():
+            return self.table.get_url(page=self.table.paginator.page(self.current_page_number).previous_page_number())
+    
+    @property
+    def next_page_url(self):
+        if self.table.paginator.page(self.current_page_number).has_next():
+            return self.table.get_url(page=self.table.paginator.page(self.current_page_number).next_page_number())
+    
+    @property
+    def last_page_url(self):
+        return self.table.get_url(page=self.table.paginator.num_pages)
+    
     def url(self):
         return self.table.get_url(page=self.number)
