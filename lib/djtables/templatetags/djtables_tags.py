@@ -33,43 +33,57 @@ def table_body(table):
 
 @register.inclusion_tag("djtables/foot.html")
 def table_foot(table):
+    paginator = Paginator(table)
+
     return {
-        "pages": [
-            WrappedPage(table, number)
-            for number in table.paginator.page_range ],
-        "num_columns": len(table.columns) }
+        "num_columns": len(table.columns),
+        "page": paginator.current(),
+        "paginator": paginator,
+    }
 
 
-class WrappedPage(object):
-    def __init__(self, table, number):
+class Paginator(object):
+    def __init__(self, table):
         self.table = table
+
+    def current(self):
+        return Page(self, self.table._meta.page)
+
+    @property
+    def num_pages(self):
+        return self.table.paginator.num_pages
+
+    def first(self):
+        return Page(self, 1)
+
+    def last(self):
+        return Page(self, self.num_pages)
+
+
+class Page(object):
+    def __init__(self, paginator, number):
+        self.paginator = paginator
         self.number = number
 
     @property
-    def is_active(self):
-        return self.table._meta.page == self.number
+    def is_first(self):
+        return self.number == 1
 
     @property
-    def current_page_number(self):
-        return self.table._meta.page
+    def is_last(self):
+        return self.number == self.paginator.num_pages
 
-    @property
-    def first_page_url(self):
-        return self.table.get_url(page=1)
+    def previous(self):
+        if not self.is_first:
+            return Page(
+                self.paginator,
+                self.number-1)
 
-    @property
-    def previous_page_url(self):
-        if self.table.paginator.page(self.current_page_number).has_previous():
-            return self.table.get_url(page=self.table.paginator.page(self.current_page_number).previous_page_number())
-
-    @property
-    def next_page_url(self):
-        if self.table.paginator.page(self.current_page_number).has_next():
-            return self.table.get_url(page=self.table.paginator.page(self.current_page_number).next_page_number())
-
-    @property
-    def last_page_url(self):
-        return self.table.get_url(page=self.table.paginator.num_pages)
+    def next(self):
+        if not self.is_last:
+            return Page(
+                self.paginator,
+                self.number+1)
 
     def url(self):
-        return self.table.get_url(page=self.number)
+        return self.paginator.table.get_url(page=self.number)
