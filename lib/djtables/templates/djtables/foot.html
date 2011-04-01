@@ -2,11 +2,11 @@
     <tr>
         <td colspan="{{ num_columns }}">
             <div class="paginator">{% if not page.is_first %}
-                <a href="{{ paginator.first.url }}" title="First Page">&laquo;</a>
-                <a href="{{ page.previous.url }}" title="Previous Page">&lsaquo;</a>{% endif %}
+                <a href="{{ paginator.first.url }}" title="First Page" class="first">&laquo;</a>
+                <a href="{{ page.previous.url }}" title="Previous Page" class="previous">&lsaquo;</a>{% endif %}
                 <span>Page {{ page.number }} of {{ paginator.num_pages }}</span>{% if not page.is_last %}
-                <a href="{{ page.next.url }}" title="Next Page">&rsaquo;</a>
-                <a href="{{ paginator.last.url }}" title="Last Page">&raquo;</a>{% endif %}
+                <a href="{{ page.next.url }}" title="Next Page" class="next">&rsaquo;</a>
+                <a href="{{ paginator.last.url }}" title="Last Page" class="last">&raquo;</a>{% endif %}
             </div>
         </td>
     </tr>
