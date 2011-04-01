@@ -106,22 +106,16 @@ class Column(object):
             return self._link(cell)
 
         return None
-    
+
     @property
     def has_css_class(self):
-        """
-        If there is a css class defined for this column.
-        """
+        """Return True if a CSS class is defined for this column."""
         return self._css_class is not None
-    
+
     def css_class(self):
-        """
-        The css class for this column, or null
-        """
-        if self.has_css_class:
-            return self._css_class
-        
-        return None
+        """Return the CSS class for this column."""
+        return self._css_class
+
 
 class DateColumn(Column):
 
