@@ -120,12 +120,23 @@ def test_wrapped_column_has_sort_url():
 
 
 def test_can_link():
-    cell = Fake().has_attr(value="xxx")
+    cell = Fake().has_attr(value="pi")
     linked_column = Column(link=lambda cell: cell.value.upper())
     unlinked_column = Column()
 
     assert linked_column.has_link == True
-    assert linked_column.link(cell) == u"XXX"
+    assert linked_column.link(cell) == u"PI"
 
     assert unlinked_column.has_link == False
     assert unlinked_column.link(cell) == None
+
+
+def test_can_specify_css_class():
+    column_with_css = Column(css_class="rho")
+    column_no_css = Column()
+
+    assert column_with_css.has_css_class == True
+    assert column_with_css.css_class == "rho"
+
+    assert column_no_css.has_css_class == False
+    assert column_no_css.css_class == None
