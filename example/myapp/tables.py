@@ -10,7 +10,7 @@ from .models import Human
 class MyTable(Table):
     name   = Column(link=lambda cell: reverse("edit", args=[cell.row.pk]))
     gender = Column(value=lambda cell: cell.object.get_gender_display())
-    phone  = Column(sortable=False)
+    phone  = Column(sortable=False, css_class="phone")
     
     class Meta:
         per_page = 4
