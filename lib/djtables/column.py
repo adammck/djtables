@@ -112,6 +112,7 @@ class Column(object):
         """Return True if a CSS class is defined for this column."""
         return self._css_class is not None
 
+    @property
     def css_class(self):
         """Return the CSS class for this column."""
         return self._css_class
