@@ -2,11 +2,11 @@
     <tr>
         <td colspan="{{ num_columns }}">
             <div class="paginator">
-                <a href="{{ pages.0.first_page_url }}"><span>&laquo;</span></a>
-                <a href="{{ pages.0.previous_page_url }}"><span>&lsaquo;</span></a>
-                <a href="javascript:;"><span class="current">Page {{ pages.0.current_page_number }} of {{ pages.0.table.paginator.num_pages }}</span></a>
-                <a href="{{ pages.0.next_page_url }}"><span>&rsaquo;</span></a>
-                <a href="{{ pages.0.last_page_url }}"><span>&raquo;</span></a>
+                <a href="{{ pages.0.first_page_url }}" title="First Page">&laquo;</a>
+                <a href="{{ pages.0.previous_page_url }}" title="Previous Page">&lsaquo;</a>
+                <span>Page {{ pages.0.current_page_number }} of {{ pages.0.table.paginator.num_pages }}</span>
+                <a href="{{ pages.0.next_page_url }}" title="Next Page">&rsaquo;</a>
+                <a href="{{ pages.0.last_page_url }}" title="Last Page">&raquo;</a>
             </div>
         </td>
     </tr>
