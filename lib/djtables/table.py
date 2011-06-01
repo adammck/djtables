@@ -46,7 +46,7 @@ class Table(object):
         ol = self._object_list
 
         if self._meta.order_by and hasattr(ol, "order_by"):
-            ol = ol.order_by(self._meta.order_by)
+            ol = ol.order_by(*self._meta.order_by.split("|"))
 
         return ol
 
