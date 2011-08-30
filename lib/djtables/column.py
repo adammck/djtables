@@ -113,10 +113,23 @@ class Column(object):
         return self._css_class is not None
 
     @property
-    def css_class(self):
-        """Return the CSS class for this column."""
-        return self._css_class
+    def has_default_css_class(self):
+        """Return True if a CSS class is defined for this column."""
+        return self._css_class is not None and isinstance(self._css_class, basestring)
 
+    @property
+    def default_css_class(self):
+        if isinstance(self._css_class, basestring):
+            return self._css_class
+        return None
+    
+    def css_class(self, cell):
+        """Return the CSS class for this column."""
+        if isinstance(self._css_class, basestring):
+            return self._css_class
+        else:
+            return self._css_class(cell)
+            
 
 class DateColumn(Column):
 
