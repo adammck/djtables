@@ -16,13 +16,14 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True):
         self._name = name
         self._value = value
         self._link = link
         self._css_class = css_class
         self.sortable = sortable
         self.sort_key_fn = sort_key_fn
+        self._titleized = titleized
 
         # like django fields, keep track of the order which columns are
         # created, so they can be sorted later. (unfortunately, python
@@ -62,6 +63,11 @@ class Column(object):
     def name(self):
         """Return the column name, whether explicit or implicit."""
         return self._name or self.bound_to[1]
+
+    @property
+    def titleized(self):
+        """Return whether the column title should be titleized."""
+        return self._titleized
 
     def value(self, cell):
         """
