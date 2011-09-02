@@ -44,7 +44,11 @@ class Table(object):
         """
 
         ol = self._object_list
-
+        reverse = self._meta.order_by.startswith("-")
+        ob = self._meta.order_by[1:] if reverse else self._meta.order_by
+        for column in self.columns:
+            if column.sort_key_fn is not None and column.name == ob:
+                return sorted(ol, key=column.sort_key_fn, reverse=reverse)
         if self._meta.order_by and hasattr(ol, "order_by"):
             ol = ol.order_by(*self._meta.order_by.split("|"))
 

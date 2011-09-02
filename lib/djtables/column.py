@@ -16,12 +16,13 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=False):
         self._name = name
         self._value = value
         self._link = link
         self._css_class = css_class
         self.sortable = sortable
+        self.sort_key_fn = sort_key_fn
 
         # like django fields, keep track of the order which columns are
         # created, so they can be sorted later. (unfortunately, python
