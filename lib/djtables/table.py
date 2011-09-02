@@ -44,6 +44,9 @@ class Table(object):
         """
 
         ol = self._object_list
+
+        if not self._meta.order_by: return ol
+
         reverse = self._meta.order_by.startswith("-")
         ob = self._meta.order_by[1:] if reverse else self._meta.order_by
         for column in self.columns:

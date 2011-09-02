@@ -16,7 +16,7 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=False):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None):
         self._name = name
         self._value = value
         self._link = link
@@ -46,7 +46,6 @@ class Column(object):
         can only be called once per instance, because a Column cannot be
         bound to multiple tables. (The sort order would be ambiguous.)
         """
-
         if self.bound_to is not None:
             raise AttributeError(
                 "Column is already bound to '%s' as '%s'" %\
