@@ -16,13 +16,14 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True, safe=False):
         self._name = name
         self._value = value
         self._link = link
         self._css_class = css_class
         self.sortable = sortable
         self.sort_key_fn = sort_key_fn
+        self._safe = safe
         self._titleized = titleized
 
         # like django fields, keep track of the order which columns are
@@ -68,6 +69,13 @@ class Column(object):
     def titleized(self):
         """Return whether the column title should be titleized."""
         return self._titleized
+
+    @property
+    def safe(self):
+        """
+        Return whether cell should be rendered directly as HTML.
+        """
+        return self._safe
 
     def value(self, cell):
         """
