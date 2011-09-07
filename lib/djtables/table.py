@@ -14,6 +14,7 @@ class Table(object):
         self._object_list = object_list
         self._request = request
         self._paginator = None
+        self.new_columns = []
 
         if request is not None:
             prefix = kwargs.get('prefix', "")
@@ -80,7 +81,11 @@ class Table(object):
     @property
     def columns(self):
         """Return the list of columns."""
-        return self._meta.columns
+        return self._meta.columns + self.new_columns
+
+    def add_column(self, column, name):
+        self.new_columns.append(column)
+        column.bind_to(self, name)
 
     @property
     def rows(self):
