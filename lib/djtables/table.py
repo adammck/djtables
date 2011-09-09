@@ -44,18 +44,25 @@ class Table(object):
         filtered, etc) according to its meta options.
         """
 
+        def _sort(ob, ol):
+            reverse = ob.startswith("-")
+            ob = ob[1:] if reverse else ob
+            for column in self.columns:
+                if column.sort_key_fn is not None and column.name == ob:
+                    return sorted(ol, key=column.sort_key_fn, reverse=reverse)
+            if self._meta.order_by and hasattr(ol, "order_by"):
+                return list(ol.order_by(*self._meta.order_by.split("|")))
+            return ob
+
         ol = self._object_list
-
-        if not self._meta.order_by: return ol
-
-        reverse = self._meta.order_by.startswith("-")
-        ob = self._meta.order_by[1:] if reverse else self._meta.order_by
-        for column in self.columns:
-            if column.sort_key_fn is not None and column.name == ob:
-                return sorted(ol, key=column.sort_key_fn, reverse=reverse)
-        if self._meta.order_by and hasattr(ol, "order_by"):
-            ol = ol.order_by(*self._meta.order_by.split("|"))
-
+        ob = self._meta.order_by
+        if not ob: return ol
+        if isinstance(ob, basestring):
+            return _sort(ob, ol)
+        elif isinstance(ob, list):
+            ob.reverse()
+            for fn in ob:
+                ol = _sort(fn, ol)
         return ol
 
     def as_html(self): # pragma: no cover
