@@ -18,7 +18,7 @@ class Table(object):
 
         if request is not None:
             prefix = kwargs.get('prefix', "")
-            kwargs = dict(extract(request.GET, prefix), **kwargs)
+            kwargs.update(extract(request.GET, prefix))
 
         if len(kwargs):
             self._meta = self._meta.fork(
