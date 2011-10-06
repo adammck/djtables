@@ -52,7 +52,7 @@ class Table(object):
                     return sorted(ol, key=column.sort_key_fn, reverse=reverse)
             if self._meta.order_by and hasattr(ol, "order_by"):
                 return list(ol.order_by(*self._meta.order_by.split("|")))
-            return ob
+            return ol
 
         ol = self._object_list
         ob = self._meta.order_by
