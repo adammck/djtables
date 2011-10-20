@@ -16,11 +16,12 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True, safe=False):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True, safe=False, header_class=""):
         self._name = name
         self._value = value
         self._link = link
         self._css_class = css_class
+        self._header_class = header_class
         self.sortable = sortable
         self.sort_key_fn = sort_key_fn
         self._safe = safe
@@ -143,6 +144,9 @@ class Column(object):
             return self._css_class
         else:
             return self._css_class(cell)
+
+    def header_class(self):
+        return self._header_class
             
 
 class DateColumn(Column):

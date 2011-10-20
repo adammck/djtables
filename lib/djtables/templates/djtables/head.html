@@ -1,6 +1,6 @@
 <thead>
     <tr>{% for column in columns %}
-        <th scope="col" class="{% if column.is_sorted %}sorted {{ column.sort_direction }}{% endif %}">{% if column.sortable %}
+        <th scope="col" class="{% if column.is_sorted %}sorted {{ column.sort_direction }}{% endif %} {{ column.header_class }}">{% if column.sortable %}
             <a href="{{ column.sort_url }}" title="Sort this table by {{ column|lower }}">{% else %}
             <span class="unsortable">{% endif %}
                 {% if column.titleized %}{{ column|title }}{% else %}{{ column }}{% endif %}{% if column.is_sorted %}
