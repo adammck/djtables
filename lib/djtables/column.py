@@ -16,12 +16,16 @@ class Column(object):
 
     creation_counter = 0
 
-    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None):
+    def __init__(self, name=None, value=None, link=None, sortable=True, css_class=None, sort_key_fn=None, titleized=True, safe=False, header_class=""):
         self._name = name
         self._value = value
         self._link = link
         self._css_class = css_class
+        self._header_class = header_class
         self.sortable = sortable
+        self.sort_key_fn = sort_key_fn
+        self._safe = safe
+        self._titleized = titleized
 
         # like django fields, keep track of the order which columns are
         # created, so they can be sorted later. (unfortunately, python
@@ -45,7 +49,6 @@ class Column(object):
         can only be called once per instance, because a Column cannot be
         bound to multiple tables. (The sort order would be ambiguous.)
         """
-
         if self.bound_to is not None:
             raise AttributeError(
                 "Column is already bound to '%s' as '%s'" %\
@@ -62,6 +65,18 @@ class Column(object):
     def name(self):
         """Return the column name, whether explicit or implicit."""
         return self._name or self.bound_to[1]
+
+    @property
+    def titleized(self):
+        """Return whether the column title should be titleized."""
+        return self._titleized
+
+    @property
+    def safe(self):
+        """
+        Return whether cell should be rendered directly as HTML.
+        """
+        return self._safe
 
     def value(self, cell):
         """
@@ -113,11 +128,26 @@ class Column(object):
         return self._css_class is not None
 
     @property
-    def css_class(self):
+    def has_default_css_class(self):
+        """Return True if a CSS class is defined for this column."""
+        return self._css_class is not None and isinstance(self._css_class, basestring)
+
+    @property
+    def default_css_class(self):
+        if isinstance(self._css_class, basestring):
+            return self._css_class
+        return None
+    
+    def css_class(self, cell):
         """Return the CSS class for this column."""
-        return self._css_class
+        if isinstance(self._css_class, basestring):
+            return self._css_class
+        else:
+            return self._css_class(cell)
 
-
+    def header_class(self):
+        return self._header_class
+            
 class DateColumn(Column):
 
     """

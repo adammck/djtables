@@ -23,8 +23,8 @@ class Row(object):
         return unicode(self.obj)
 
     def __iter__(self):
-        for column in self.table._meta.columns:
+        for column in self.table.columns:
             yield self.table.cell(column, self)
 
     def __len__(self):
-        return len(self.table._meta.columns)
+        return len(self.table.columns)

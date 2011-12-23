@@ -14,10 +14,11 @@ class Table(object):
         self._object_list = object_list
         self._request = request
         self._paginator = None
+        self.new_columns = []
 
         if request is not None:
             prefix = kwargs.get('prefix', "")
-            kwargs = dict(extract(request.GET, prefix), **kwargs)
+            kwargs.update(extract(request.GET, prefix))
 
         if len(kwargs):
             self._meta = self._meta.fork(
@@ -43,11 +44,25 @@ class Table(object):
         filtered, etc) according to its meta options.
         """
 
+        def _sort(ob, ol):
+            reverse = ob.startswith("-")
+            ob = ob[1:] if reverse else ob
+            for column in self.columns:
+                if column.sort_key_fn is not None and column.name == ob:
+                    return sorted(ol, key=column.sort_key_fn, reverse=reverse)
+            if self._meta.order_by and hasattr(ol, "order_by"):
+                return list(ol.order_by(*self._meta.order_by.split("|")))
+            return ol
+
         ol = self._object_list
-
-        if self._meta.order_by and hasattr(ol, "order_by"):
-            ol = ol.order_by(*self._meta.order_by.split("|"))
-
+        ob = self._meta.order_by
+        if not ob: return ol
+        if isinstance(ob, basestring):
+            return _sort(ob, ol)
+        elif isinstance(ob, list):
+            ob.reverse()
+            for fn in ob:
+                ol = _sort(fn, ol)
         return ol
 
     def as_html(self): # pragma: no cover
@@ -73,7 +88,11 @@ class Table(object):
     @property
     def columns(self):
         """Return the list of columns."""
-        return self._meta.columns
+        return self._meta.columns + self.new_columns
+
+    def add_column(self, column, name):
+        self.new_columns.append(column)
+        column.bind_to(self, name)
 
     @property
     def rows(self):

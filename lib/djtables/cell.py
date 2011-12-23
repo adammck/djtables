@@ -37,3 +37,8 @@ class Cell(object):
     def link(self):
         """Return the URL which this cell links to."""
         return self.column.link(self)
+    
+    @property
+    def css_class(self):
+        """Return the URL which this cell links to."""
+        return self.column.css_class(self)
