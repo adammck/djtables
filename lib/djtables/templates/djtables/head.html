@@ -6,7 +6,7 @@
                 {% if column.titleized %}{{ column|title }}{% else %}{{ column }}{% endif %}{% if column.is_sorted %}
                 <span title="Sorted in {{ column|lower }} order">
                     ({{ column.sort_direction }})
-                </span>{% endif %}{% if column.is_ordered %}
+                </span>{% endif %}{% if column.sortable %}
             </a>{% else %}
             </span>{% endif %}
         </th>{% endfor %}
